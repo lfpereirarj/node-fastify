@@ -1,0 +1,40 @@
+{
+  "name": "node-fastify",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfpereirarj/node-fastify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lfpereirarj/node-fastify/issues"
+  },
+  "homepage": "https://github.com/lfpereirarj/node-fastify#readme",
+  "dependencies": {
+    "fastify": "^5.8.5",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@types/node": "^25.9.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  }
+}
