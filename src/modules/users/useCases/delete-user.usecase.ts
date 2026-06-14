@@ -1,4 +1,5 @@
-import type { UsersRepository } from "../repos/users.repository.js";
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
+import { AppError } from "@/shared/errors/app-error.js";
 
 export class DeleteUserUseCase {
 	constructor(private userRepository: UsersRepository) {}
@@ -6,7 +7,7 @@ export class DeleteUserUseCase {
 	async execute(id: string) {
 		const userExists = await this.userRepository.findById(id);
 		if (!userExists) {
-			throw new Error("User not found");
+			throw new AppError("User not found", 404);
 		}
 
 		await this.userRepository.delete(id);

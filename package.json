@@ -2,9 +2,12 @@
   "name": "node-fastify",
   "version": "0.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "test": "tsx --test src/**/*.spec.ts",
+    "test:watch": "tsx --test --watch src/**/*.spec.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "biome check src/",
@@ -23,6 +26,8 @@
   },
   "homepage": "https://github.com/lfpereirarj/node-fastify#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "fastify": "^5.8.5",
     "zod": "^4.4.3"
   },
@@ -33,6 +38,7 @@
     "@types/node": "^25.9.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "prisma": "^7.8.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   },

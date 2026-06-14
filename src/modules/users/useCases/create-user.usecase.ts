@@ -1,4 +1,5 @@
-import type { UsersRepository } from "../repos/users.repository";
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
+import { AppError } from "@/shared/errors/app-error.js";
 
 interface CreateUserRequest {
 	name: string;
@@ -14,7 +15,7 @@ export class CreateUserUseCase {
 		const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
 		if (userAlreadyExists) {
-			throw new Error("E-mail already exists");
+			throw new AppError("E-mail already exists");
 		}
 
 		const hashedPassword = `${password}_hashed`;

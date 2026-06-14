@@ -1,0 +1,10 @@
+services:
+  db:
+    image: bitnami/postgresql:latest
+    container_name: fastify_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=fastify_db

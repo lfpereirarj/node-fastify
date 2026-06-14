@@ -1,4 +1,4 @@
-import type { UsersRepository } from "../repos/users.repository.js";
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
 
 export class ListUsersUseCase {
 	constructor(private usersRepository: UsersRepository) {}

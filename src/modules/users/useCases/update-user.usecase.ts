@@ -1,4 +1,5 @@
-import type { UsersRepository } from "../repos/users.repository";
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
+import { AppError } from "@/shared/errors/app-error.js";
 
 interface UpdateUserRequest {
 	id: string;
@@ -15,7 +16,7 @@ export class UpdateUserUseCase {
 		const userExists = await this.userRepository.findById(id);
 
 		if (!userExists) {
-			throw new Error("User not found");
+			throw new AppError("User not found", 404);
 		}
 
 		const hashedPassword = `${password}_hashed`;
