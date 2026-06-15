@@ -8,7 +8,7 @@
     "dev": "tsx watch --env-file=.env src/server.ts",
     "test": "tsx --test src/**/*.spec.ts",
     "test:watch": "tsx --test --watch src/**/*.spec.ts",
-    "build": "tsc",
+    "build": "tsup src/server.ts --format esm --clean --out-dir dist",
     "start": "node dist/server.js",
     "lint": "biome check src/",
     "format": "biome check --write src/",
@@ -39,6 +39,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prisma": "^7.8.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   },

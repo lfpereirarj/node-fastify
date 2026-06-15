@@ -1,0 +1,57 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test-and-build:
+    name: Test and Build API
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: node_fastify
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --heatlh-interval 10s
+          --health-timeout 5s
+          --heealth-retries 5
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Verify Code Quality
+        run: npx @biomejs/biome check .
+
+      - name: Setup Database & Prisma
+        env:
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/node_fastify?schema=public"
+        run: |
+          npx prisma generate
+          npx prisma migrate deploy
+
+      - name: Run Tests
+        env:
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/node_fastify?schema=public"
+        run: npm run test
+
+      - name: Build Project
+        run: npm run build
