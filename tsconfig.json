@@ -11,7 +11,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".", // Diz ao TS onde começar a procurar
 		"paths": {
-			"@/*": ["./src/*"] // Mapeia o @/ para a pasta src/
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": ["src/**/*"],

@@ -13,6 +13,7 @@ import { UsersRepository } from "@/modules/users/repos/users.repository.js";
 import { CreateUserUseCase } from "@/modules/users/useCases/create-user.usecase.js";
 import { DeleteUserUseCase } from "@/modules/users/useCases/delete-user.usecase.js";
 import { ListUsersUseCase } from "@/modules/users/useCases/list-users.usecases.js";
+import { PartialUpdateUserUseCase } from "@/modules/users/useCases/partial-update-user.usecase.js";
 import { UpdateUserUseCase } from "@/modules/users/useCases/update-user.usecase.js";
 import { AppError } from "@/shared/errors/app-error.js";
 
@@ -137,6 +138,43 @@ app.put(
 
 		const updateUserUseCase = new UpdateUserUseCase(usersRepository);
 		const user = await updateUserUseCase.execute({ id, name, email, password });
+
+		return reply.status(200).send({ user });
+	},
+);
+
+const partialUpdateUserBodySchema = z.object({
+	name: z.string().min(3).describe("Nome do usuário").optional(),
+	email: z.string().email().describe("E-mail único").optional(),
+	password: z.string().min(6).describe("Senha de acesso").optional(),
+});
+
+app.patch(
+	"/users/:id",
+	{
+		schema: {
+			tags: ["Users"],
+			summary: "Atualizar dados parciais de um usuário (PATCH)",
+			params: partialUpdateUserBodySchema,
+			body: updateUserBodySchema,
+			response: {
+				200: z
+					.object({ user: z.any() })
+					.describe("Usuário atualizado com sucesso"),
+				404: z
+					.object({ message: z.string() })
+					.describe("Usuário não encontrado"),
+			},
+		},
+	},
+	async (request, reply) => {
+		const { id } = updateUserParamsSchema.parse(request.params);
+		const userData = partialUpdateUserBodySchema.parse(request.body);
+
+		const partialUpdateUserUseCase = new PartialUpdateUserUseCase(
+			usersRepository,
+		);
+		const user = await partialUpdateUserUseCase.execute({ id, ...userData });
 
 		return reply.status(200).send({ user });
 	},
