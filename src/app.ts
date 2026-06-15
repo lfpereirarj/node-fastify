@@ -24,7 +24,7 @@ app.post("/users", async (request, reply) => {
 	return reply.status(201).send({ user });
 });
 
-app.setErrorHandler((error, request, reply) => {
+app.setErrorHandler((error, _request, reply) => {
 	if (error instanceof z.ZodError) {
 		return reply
 			.status(400)

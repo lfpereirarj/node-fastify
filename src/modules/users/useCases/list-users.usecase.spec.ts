@@ -1,7 +1,8 @@
 import { strict as assert } from "node:assert";
 import { beforeEach, describe, it } from "node:test";
 import { InMemoryUsersRepository } from "@/modules/users/repos/memory-users.repository.js";
-import { ListUsersUseCase } from "@/modules/users/useCases/list-users.usecases.js"; // Ajuste o nome se estiver no singular
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
+import { ListUsersUseCase } from "@/modules/users/useCases/list-users.usecases.js";
 
 describe("List Users UseCase", () => {
 	let usersRepository: InMemoryUsersRepository;
@@ -9,7 +10,7 @@ describe("List Users UseCase", () => {
 
 	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository();
-		sut = new ListUsersUseCase(usersRepository as any);
+		sut = new ListUsersUseCase(usersRepository as unknown as UsersRepository);
 	});
 
 	it("should be able to list all users", async () => {

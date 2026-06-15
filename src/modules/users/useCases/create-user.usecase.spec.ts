@@ -1,6 +1,7 @@
 import { strict as assert } from "node:assert";
 import { beforeEach, describe, it } from "node:test";
 import { InMemoryUsersRepository } from "@/modules/users/repos/memory-users.repository.js";
+import type { UsersRepository } from "@/modules/users/repos/users.repository.js";
 import { CreateUserUseCase } from "@/modules/users/useCases/create-user.usecase.js";
 import { AppError } from "@/shared/errors/app-error.js";
 
@@ -11,7 +12,7 @@ describe("Create User UseCase", () => {
 	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository();
 
-		sut = new CreateUserUseCase(usersRepository as any);
+		sut = new CreateUserUseCase(usersRepository as unknown as UsersRepository);
 	});
 
 	it("should be able to create a new user", async () => {
