@@ -24,7 +24,7 @@ jobs:
           --health-cmd pg_isready
           --heatlh-interval 10s
           --health-timeout 5s
-          --heealth-retries 5
+          --health-retries 5
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
